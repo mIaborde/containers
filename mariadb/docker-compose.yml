@@ -1,0 +1,40 @@
+version: "3.7"
+
+networks:
+  network:
+    name: ${PROJECT_NAME}
+
+services:
+  db:
+    container_name: ${PROJECT_NAME}_db
+    image: mariadb:latest
+    ports:
+      - ${DB_PORT}:3306
+    # volumes:
+    #   - ./docker/db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${PROJECT_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    command:
+      [
+        mysqld,
+        --character-set-server=utf8mb4,
+        --collation-server=utf8mb4_unicode_ci,
+      ]
+    restart: always
+    networks:
+      - network
+
+  admin:
+    container_name: ${PROJECT_NAME}_admin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - ${ADMIN_PORT}:80
+    environment:
+      PMA_HOST: db
+      PMA_PORT: ${DB_PORT}
+      PMA_USER: root
+      PMA_PASSWORD: ${DB_ROOT_PASSWORD}
+    restart: always
+    networks:
+      - network
