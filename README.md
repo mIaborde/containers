@@ -42,7 +42,7 @@ To integrate Docker into Visual Studio Code you can install [Docker extension](h
 
 ## Gitea
 
-| services | db                    | app                   |
+| services | db                    | front                 |
 | -------- | --------------------- | --------------------- |
 | image    | mariadb:latest        | gitea:latest          |
 | port     | http://localhost:3306 | http://localhost:3000 |
@@ -75,7 +75,7 @@ docker-compose up -d
 
 ## LEMP
 
-| services | web                   | php              | db                    | admin                 |
+| services | front                 | engine           | db                    | admin                 |
 | -------- | --------------------- | ---------------- | --------------------- | --------------------- |
 | image    | nginx:stable-alpine   | php:7-fpm-alpine | mariadb:latest        | phpmyadmin/phpmyadmin |
 | port     | http://localhost:8000 | x:8001           | http://localhost:3306 | http://localhost:3307 |
@@ -85,19 +85,20 @@ docker-compose up -d
 git clone https://github.com/miaborde/containers \
 && mv containers/lemp ./lemp \
 && rm -rf containers \
+&& cd lemp \
 # edit the .env file according to your needs, then :
 docker-compose up -d
 ```
 
-> Just place your projects in the **web** folder so they are accessible on http://localhost:8000/yourProject.
+> Just place your projects in the **docker/front/html** folder so they are accessible on http://localhost:8000/yourProject.
 > MariaDB is ready to go, just create a new database via PhpMyAdmin.
 
 ## Postgres
 
-| services | api                   | pwa                   | db                    |
-| -------- | --------------------- | --------------------- | --------------------- |
-| image    | node:lts-alpine       | nginx:stable-alpine   | postgres:alpine       |
-| port     | http://localhost:3001 | http://localhost:3000 | http://localhost:3002 |
+| services | db                    |
+| -------- | --------------------- |
+| image    | postgres:alpine       |
+| port     | http://localhost:5432 |
 
 ```bash
 # from the root of your project
