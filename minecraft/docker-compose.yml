@@ -1,0 +1,21 @@
+version: "3.7"
+
+networks:
+  network:
+    name: ${PROJECT_NAME}
+
+services:
+  front:
+    container_name: ${PROJECT_NAME}_front
+    image: itzg/minecraft-server
+    ports:
+      - ${FRONT_PORT}:25565
+    # volumes:
+    #   - ./data:/data
+    environment:
+      EULA: "TRUE"
+      TYPE: ${FRONT_TYPE}
+    command: --noconsole
+    restart: always
+    networks:
+      - network
